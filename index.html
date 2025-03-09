@@ -19,6 +19,7 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+        width: 100vw;
         box-sizing: border-box;
         border: 4px solid black;
         border-style: double;
@@ -30,6 +31,7 @@
         padding: 8px;
         text-align: center;
         margin-bottom: 8px;
+        font-size: 1.8vmin;
       }
 
       #calendar {
@@ -42,23 +44,28 @@
         align-items: center;
         justify-content: center;
         padding: 8px;
-        font-size: 1.2vw;
         image-rendering: pixelated;
       }
 
+      .weekday {
+        font-size: 1.8vmin;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+
       .month {
-        font-size: 2.2vw;
+        font-size: 1.8vmin;
         margin-bottom: 8px;
         text-transform: uppercase;
       }
 
       .day {
-        font-size: 4vw;
+        font-size: 1.8vmin;
         margin: 10px 0;
       }
 
       .year {
-        font-size: 2vw;
+        font-size: 1.8vmin;
       }
 
       /* pixel art decorations */
@@ -74,8 +81,9 @@
   <body>
     <div id="header">WHAT DAY IS IT?</div>
     <div id="calendar">
-      <div class="month" id="month">JANUARY</div>
+      <div class="weekday" id="weekday">SUNDAY</div>
       <div class="day" id="day">01</div>
+      <div class="month" id="month">JANUARY</div>
       <div class="year" id="year">2023</div>
     </div>
 
@@ -83,6 +91,16 @@
       // Function to update the date
       function updateDate() {
         const now = new Date()
+        const weekdayNames = [
+          'SUNDAY',
+          'MONDAY',
+          'TUESDAY',
+          'WEDNESDAY',
+          'THURSDAY',
+          'FRIDAY',
+          'SATURDAY',
+        ]
+
         const monthNames = [
           'JANUARY',
           'FEBRUARY',
@@ -98,6 +116,7 @@
           'DECEMBER',
         ]
 
+        document.getElementById('weekday').textContent = weekdayNames[now.getDay()]
         document.getElementById('month').textContent = monthNames[now.getMonth()]
         document.getElementById('day').textContent = now.getDate().toString().padStart(2, '0')
         document.getElementById('year').textContent = now.getFullYear()

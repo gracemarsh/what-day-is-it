@@ -20,11 +20,20 @@ function createWindow() {
     frame: false,
     resizable: true,
     transparent: false,
-    alwaysOnTop: false
+    alwaysOnTop: false,
+    minWidth: 200,
+    minHeight: 200
   });
 
   // Load the index.html file
   mainWindow.loadFile('index.html');
+
+  // Ensure window stays square when resized
+  mainWindow.on('resize', () => {
+    const size = mainWindow.getSize();
+    const square = Math.max(size[0], size[1]);
+    mainWindow.setSize(square, square);
+  });
 
   // Enable right-click to show context menu
   mainWindow.webContents.on('context-menu', (_, params) => {
