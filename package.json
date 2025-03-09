@@ -5,16 +5,23 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
     "build": "electron-builder --mac",
     "postinstall": "electron-builder install-app-deps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["calendar", "electron", "pixelated", "desktop"],
+  "keywords": [
+    "calendar",
+    "electron",
+    "pixelated",
+    "desktop"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^35.0.0",
     "electron-builder": "^25.1.8",
+    "electron-reloader": "^1.2.3",
     "svg2png": "^4.1.1"
   },
   "build": {
@@ -22,7 +29,9 @@
     "productName": "What Day Is It",
     "mac": {
       "category": "public.app-category.utilities",
-      "target": ["dmg"]
+      "target": [
+        "dmg"
+      ]
     },
     "files": [
       "**/*",
@@ -32,4 +41,4 @@
       "output": "dist"
     }
   }
-} 
+}

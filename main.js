@@ -1,6 +1,17 @@
 const { app, BrowserWindow, Tray, Menu, screen, nativeImage } = require('electron');
 const path = require('path');
 
+// Add hot reload for development
+try {
+  require('electron-reloader')(module, {
+    watchRenderer: true,
+    ignore: ['node_modules/**', 'dist/**']
+  });
+  console.log('Hot reload enabled');
+} catch (err) {
+  console.log('Error enabling hot reload:', err);
+}
+
 // Keep a global reference of the window object to avoid it being garbage collected
 let mainWindow;
 let tray;
