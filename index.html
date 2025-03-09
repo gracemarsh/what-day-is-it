@@ -27,30 +27,25 @@
       /* Custom title bar styling */
       #title-bar {
         height: 30px;
-        background-color: #000;
+        background-color: red;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         padding: 0 8px;
         -webkit-app-region: drag;
         border-bottom: 3px solid black;
       }
 
-      #title {
-        color: white;
-        font-size: 1.8vmin;
-        margin-left: 5px;
-      }
-
       #window-controls {
         display: flex;
         -webkit-app-region: no-drag;
+        margin-right: 15px;
       }
 
       .button {
         width: 20px;
         height: 20px;
-        margin-left: 5px;
+        margin-right: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -68,14 +63,6 @@
 
       #close-button {
         background-color: #ff0000;
-      }
-
-      .button-symbol {
-        font-family: monospace;
-        font-size: 16px;
-        color: white;
-        font-weight: bold;
-        line-height: 1;
       }
 
       .button:hover {
@@ -194,15 +181,14 @@
   <body>
     <!-- Custom title bar -->
     <div id="title-bar">
-      <div id="title">WHAT DAY IS IT?</div>
       <div id="window-controls">
-        <div id="min-button" class="button">
+        <div id="close-button" class="button">
           <div class="pixel-button"></div>
         </div>
         <div id="max-button" class="button">
           <div class="pixel-button"></div>
         </div>
-        <div id="close-button" class="button">
+        <div id="min-button" class="button">
           <div class="pixel-button"></div>
         </div>
       </div>
