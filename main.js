@@ -17,9 +17,12 @@ let mainWindow;
 let tray;
 
 function createWindow() {
-  const { width } = screen.getPrimaryDisplay().workAreaSize;
-  // Set window size to 1/10 of screen width (square)
-  const windowSize = Math.floor(width / 10);
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  
+  // Calculate appropriate window size
+  const defaultSize = Math.floor(width / 10); // 1/10 of screen width
+  const maxSize = Math.floor(height * 0.5); // 50% of screen height
+  const windowSize = Math.min(defaultSize, maxSize);
   
   mainWindow = new BrowserWindow({
     width: windowSize,
@@ -33,16 +36,18 @@ function createWindow() {
     transparent: false,
     alwaysOnTop: false,
     minWidth: 200,
-    minHeight: 200
+    minHeight: 200,
+    maxWidth: maxSize,
+    maxHeight: maxSize
   });
 
   // Load the index.html file
   mainWindow.loadFile('index.html');
 
-  // Ensure window stays square when resized
+  // Ensure window stays square when resized, but not bigger than maxSize
   mainWindow.on('resize', () => {
     const size = mainWindow.getSize();
-    const square = Math.max(size[0], size[1]);
+    const square = Math.min(Math.max(size[0], size[1]), maxSize);
     mainWindow.setSize(square, square);
   });
 
