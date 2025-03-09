@@ -19,7 +19,7 @@
 2. **User Interface**
 
    - Red title bar matching the main app background color
-   - Window control buttons on the left side in Mac-like order: close, maximize, minimize
+   - Window control buttons on the left side in standard macOS order: close, minimize, maximize
    - Window control buttons styled in Mario-inspired pixelated design
    - Square app window at all times (width = height)
    - Resizable window with constraints:
@@ -55,7 +55,7 @@
    - Consistent color scheme throughout the app including title bar
 
 3. **User Experience**
-   - Familiar window control placement and behavior (adapted for Mac-style)
+   - Familiar window control placement and behavior (following macOS standard)
    - Minimal user interaction required
    - Intuitive and simple interface
    - Non-intrusive desktop presence
@@ -123,8 +123,8 @@
 1. **Window Management**
 
    - **Custom Title Bar**: Red title bar that matches the app background
-   - **Mac-style Controls**: Window controls positioned on the left side in close-maximize-minimize order
-   - **Pixelated Control Buttons**: Close (red), maximize (green), minimize (yellow) buttons styled with pixel art aesthetic
+   - **macOS-standard Controls**: Window controls positioned on the left side in standard macOS order (close, minimize, maximize)
+   - **Pixelated Control Buttons**: Close (red), minimize (yellow), maximize (green) buttons styled with pixel art aesthetic
    - **Frameless Window**: Creates a custom, minimal UI while providing standard window controls
    - **IPC Communication**: Window controls communicate with main process via IPC for actions
    - **Drag Handling**: Custom drag implementation on title bar to allow window repositioning
@@ -144,7 +144,7 @@
    - **Tray-based Interface**: Minimizes desktop clutter while keeping app accessible
    - **Context Menu**: Provides essential functions without cluttering the main UI
    - **Toggling Behavior**: Allows users to show/hide the calendar as needed
-   - **Mac-adapted Controls**: Window controls follow Mac-like positioning while maintaining platform conventions for behavior
+   - **Platform-consistent Controls**: Window controls follow standard macOS positioning and order for intuitive user experience
 
 ## Future Enhancements
 
