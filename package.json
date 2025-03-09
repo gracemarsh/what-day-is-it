@@ -1,0 +1,35 @@
+{
+  "name": "what-day-is-it",
+  "version": "1.0.0",
+  "description": "A pixelated calendar app that shows the current date",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac",
+    "postinstall": "electron-builder install-app-deps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["calendar", "electron", "pixelated", "desktop"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
+    "svg2png": "^4.1.1"
+  },
+  "build": {
+    "appId": "com.calendar.whatdayisit",
+    "productName": "What Day Is It",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": ["dmg"]
+    },
+    "files": [
+      "**/*",
+      "!assets/generate-icons.js"
+    ],
+    "directories": {
+      "output": "dist"
+    }
+  }
+} 
