@@ -10,12 +10,11 @@
     <style>
       body {
         margin: 0;
-        padding: 10px;
-        background-color: rgb(253, 14, 14);
+        padding: 0;
+        background-color: red;
         font-family: 'Press Start 2P', cursive;
         overflow: hidden;
         user-select: none;
-        -webkit-app-region: drag;
         display: flex;
         flex-direction: column;
         height: 100vh;
@@ -23,6 +22,71 @@
         box-sizing: border-box;
         border: 4px solid black;
         border-style: double;
+      }
+
+      /* Custom title bar styling */
+      #title-bar {
+        height: 30px;
+        background-color: #000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8px;
+        -webkit-app-region: drag;
+        border-bottom: 3px solid black;
+      }
+
+      #title {
+        color: white;
+        font-size: 1.8vmin;
+        margin-left: 5px;
+      }
+
+      #window-controls {
+        display: flex;
+        -webkit-app-region: no-drag;
+      }
+
+      .button {
+        width: 20px;
+        height: 20px;
+        margin-left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        cursor: pointer;
+      }
+
+      #min-button {
+        background-color: #ffc000;
+      }
+
+      #max-button {
+        background-color: #00c000;
+      }
+
+      #close-button {
+        background-color: #ff0000;
+      }
+
+      .button-symbol {
+        font-family: monospace;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        line-height: 1;
+      }
+
+      .button:hover {
+        filter: brightness(1.2);
+      }
+
+      #content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 10px;
       }
 
       #header {
@@ -70,23 +134,89 @@
         margin-top: 6px;
       }
 
-      /* pixel art decorations */
-      .pixel-decoration {
-        width: 8px;
-        height: 8px;
+      /* Pixelated styling for buttons */
+      .pixel-button {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .pixel-button::before {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        right: 3px;
+        bottom: 3px;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      #min-button .pixel-button::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: 4px;
+        right: 4px;
+        height: 2px;
         background-color: black;
-        margin: 2px;
-        display: inline-block;
+      }
+
+      #max-button .pixel-button::after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+        bottom: 4px;
+        border: 2px solid black;
+      }
+
+      #close-button .pixel-button::before,
+      #close-button .pixel-button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 2px;
+        background-color: black;
+      }
+
+      #close-button .pixel-button::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      #close-button .pixel-button::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
       }
     </style>
   </head>
   <body>
-    <div id="header">WHAT DAY IS IT?</div>
-    <div id="calendar">
-      <div class="weekday" id="weekday">SUNDAY</div>
-      <div class="day" id="day">01</div>
-      <div class="month" id="month">JANUARY</div>
-      <div class="year" id="year">2023</div>
+    <!-- Custom title bar -->
+    <div id="title-bar">
+      <div id="title">WHAT DAY IS IT?</div>
+      <div id="window-controls">
+        <div id="min-button" class="button">
+          <div class="pixel-button"></div>
+        </div>
+        <div id="max-button" class="button">
+          <div class="pixel-button"></div>
+        </div>
+        <div id="close-button" class="button">
+          <div class="pixel-button"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content wrapper -->
+    <div id="content">
+      <div id="header">WHAT DAY IS IT?</div>
+      <div id="calendar">
+        <div class="weekday" id="weekday">SUNDAY</div>
+        <div class="day" id="day">01</div>
+        <div class="month" id="month">JANUARY</div>
+        <div class="year" id="year">2023</div>
+      </div>
     </div>
 
     <script>
@@ -128,11 +258,19 @@
       updateDate()
       setInterval(updateDate, 1000)
 
-      // Allow window drag
-      document.addEventListener('mousedown', (e) => {
-        if (e.button === 0) {
-          e.preventDefault()
-        }
+      // Window control buttons functionality
+      const { ipcRenderer } = require('electron')
+
+      document.getElementById('min-button').addEventListener('click', () => {
+        ipcRenderer.send('minimize-window')
+      })
+
+      document.getElementById('max-button').addEventListener('click', () => {
+        ipcRenderer.send('maximize-window')
+      })
+
+      document.getElementById('close-button').addEventListener('click', () => {
+        ipcRenderer.send('close-window')
       })
     </script>
   </body>

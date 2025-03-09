@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, Menu, screen, nativeImage } = require('electron');
+const { app, BrowserWindow, Tray, Menu, screen, nativeImage, ipcMain } = require('electron');
 const path = require('path');
 
 // Add hot reload for development
@@ -31,7 +31,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    frame: false,
+    frame: false, // Keep frameless for our custom title bar
     resizable: true,
     transparent: false,
     alwaysOnTop: false,
@@ -63,6 +63,33 @@ function createWindow() {
   // Handle window being closed
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+}
+
+// Setup IPC handlers for window controls
+function setupIPC() {
+  // Handle minimize button click
+  ipcMain.on('minimize-window', () => {
+    if (mainWindow) mainWindow.minimize();
+  });
+
+  // Handle maximize/restore button click
+  ipcMain.on('maximize-window', () => {
+    if (mainWindow) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize();
+      } else {
+        // Ensure we maintain our square ratio and max size when maximizing
+        const { height } = screen.getPrimaryDisplay().workAreaSize;
+        const maxSize = Math.floor(height * 0.5);
+        mainWindow.setSize(maxSize, maxSize);
+      }
+    }
+  });
+
+  // Handle close button click
+  ipcMain.on('close-window', () => {
+    if (mainWindow) mainWindow.hide();
   });
 }
 
@@ -123,6 +150,7 @@ function createTray() {
 
 // App ready event
 app.whenReady().then(() => {
+  setupIPC();
   createWindow();
   createTray();
 });
